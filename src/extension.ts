@@ -35,6 +35,10 @@ function formatSub(s: string, lst: Array<string>, tab: number) {
 	}
 
 	for (var i = 0; i < s.length; i++) {
+		if (s.charAt(i) === '"') {
+			i = findSecondIndex(s, '"', i);
+			continue;
+		}
 		if (s.charAt(i) === '(' || s.charAt(i) === '{' || s.charAt(i) === '[') {
 			lst.push(addTab(tab) + s.substring(0, i + 1));
 			++tab;
@@ -75,6 +79,14 @@ function formatSub(s: string, lst: Array<string>, tab: number) {
 
 }
 
+function findSecondIndex(inputString: string, target: string, start: number): number {
+	var secondIndex = inputString.indexOf(target, start + 1);
+	if (inputString.charAt(secondIndex - 1) === '\\' && secondIndex <= inputString.length - 1) {
+		return findSecondIndex(inputString, target, secondIndex + 1);
+	}
+	return secondIndex;
+}
+
 function addTab(tab: number) {
 	var r = "";
 	while (tab > 0) {
@@ -86,6 +98,7 @@ function addTab(tab: number) {
 
 function delExtraSpace(source: string): string {
 	source = source.replace(/,/g, ", ");
+	source = source.replace(/\r\n\r/g, ', ');
 	source = source.replace(/\r\n/g, '');
 	source = source.replace(/\t/g, '');
 	source = source.replace(/  /g, " ");

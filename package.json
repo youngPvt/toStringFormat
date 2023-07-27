@@ -1,6 +1,7 @@
 {
   "name": "tostringformat",
   "displayName": "toStringFormat",
+  "publisher": "toStringFormat",
   "description": "",
   "version": "0.0.1",
   "engines": {
