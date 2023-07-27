@@ -49,13 +49,13 @@ function formatSub(s: string, lst: Array<string>, tab: number) {
 			if (s.charAt(i + 1) === ',') {
 				if (i === 0) {
 					--tab;
-					lst.push(addTab(tab) + s.substring(0, 3));
-					formatSub(s.substring(3), lst, tab);
+					lst.push(addTab(tab) + s.substring(0, 2));
+					formatSub(s.substring(2), lst, tab);
 				} else {
 					lst.push(addTab(tab) + s.substring(0, i));
 					--tab;
-					lst.push(addTab(tab) + s.substring(i, i + 3));
-					formatSub(s.substring(i + 3), lst, tab);
+					lst.push(addTab(tab) + s.substring(i, i + 2));
+					formatSub(s.substring(i + 2), lst, tab);
 				}
 				return;
 			} else if (i === 0) {
@@ -70,8 +70,8 @@ function formatSub(s: string, lst: Array<string>, tab: number) {
 			}
 		}
 		if (s.charAt(i) === ',') {
-			lst.push(addTab(tab) + s.substring(0, i + 2));
-			formatSub(s.substring(i + 2), lst, tab);
+			lst.push(addTab(tab) + s.substring(0, i + 1));
+			formatSub(s.substring(i + 1), lst, tab);
 			return;
 		}
 	}
@@ -97,9 +97,10 @@ function addTab(tab: number) {
 }
 
 function delExtraSpace(source: string): string {
-	source = source.replace(/(\r\n)+/g, "");
 	source = source.replace(/\t/g, '');
-	source = source.replace(/,/g, ", ");
+	source = source.replace(/(\r\n)+/g, "\r\n");
+	source = source.replace(/\r\n+(,|\[|\]|\(|\)|\{|\})|(,|\[|\]|\(|\)|\{|\})\r\n+/g, "$1$2");
+	source = source.replace(/,\s+/g, ",");
 	source = source.replace(/ {2,}/g, " ");
 	return source;
 }
