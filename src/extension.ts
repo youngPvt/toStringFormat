@@ -99,7 +99,8 @@ function addTab(tab: number) {
 function delExtraSpace(source: string): string {
 	source = source.replace(/\t/g, '');
 	source = source.replace(/(\r\n)+/g, "\r\n");
-	source = source.replace(/\r\n+(,|\[|\]|\(|\)|\{|\})|(,|\[|\]|\(|\)|\{|\})\r\n+/g, "$1$2");
+	source = source.replace(/\r\n+(,|\[|\]|\(|\)|\{|\})|(,|\[|\]|\(|\)|\{|\})\r\n+/g, "$1$2")
+		.replace(/\r\n+(,|\[|\]|\(|\)|\{|\})|(,|\[|\]|\(|\)|\{|\})\r\n+/g, "$1$2");
 	source = source.replace(/,\s+/g, ",");
 	source = source.replace(/ {2,}/g, " ");
 	return source;
